@@ -1,40 +1,71 @@
-Project Overview
-This repository contains a Python application that performs traffic sign recognition using a Convolutional Neural Network (CNN). The application provides a simple PyQt5-based graphical user interface with three main functions:
+# 🚦 Road Sign Recognition using CNN & PyQt5
 
-Training: Trains a CNN from scratch on a labeled traffic-sign dataset.
+This repository contains a **Python application** that performs traffic sign recognition using a **Convolutional Neural Network (CNN)**. The application provides a **PyQt5-based graphical user interface (GUI)** with three main functions:
 
-Browse Image: Allows the user to select an input image from their local file system to be classified.
+1. **🧠 Training**  
+   Trains a CNN from scratch on a labeled traffic-sign dataset.
 
-Classify: Loads the trained model from disk, processes the selected image, and displays the predicted sign name in the GUI.
+2. **🖼️ Browse Image**  
+   Allows the user to select an input image from their local file system to be classified.
 
-Under the hood, we use Keras (with a TensorFlow backend) to build and train a CNN that takes RGB traffic sign images (resized to 30×30 pixels) and outputs a probability distribution over 43 possible sign classes (from the German Traffic Sign Recognition Benchmark [GTSRB] dataset).
+3. **🎯 Classify**  
+   Loads the trained model from disk, processes the selected image, and displays the predicted sign name in the GUI.
 
-Features
-Interactive GUI (PyQt5):
+Under the hood, we use **Keras** (with a TensorFlow backend) to build and train a CNN that takes RGB traffic-sign images (resized to 30×30 pixels) and outputs a probability distribution over **43 possible sign classes** (from the German Traffic Sign Recognition Benchmark [GTSRB] dataset).
 
-Browse Image: Select any .png, .jpg, .jpeg, or .bmp image from disk.
+---
 
-Training: Trigger model training on the prepared dataset and view progress in the console.
+## ⚙️ Features
 
-Classify: Load a pre-trained .h5 model file and predict the class of a newly selected image.
+### 1. Interactive GUI (PyQt5)
+- **Browse Image**  
+  Select any `.png`, `.jpg`, `.jpeg`, or `.bmp` image from disk.
 
-Result Display: The recognized class name appears in a read-only text box.
+- **Training**  
+  Trigger model training on the prepared dataset and view progress in the console.
 
-Custom CNN Architecture (Keras):
+- **Classify**  
+  Load a pre-trained `.h5` model file and predict the class of a newly selected image.
 
-Two stacks of Conv2D → Conv2D → MaxPool → Dropout
+- **Result Display**  
+  The recognized class name appears in a read-only text box.
 
-A Flatten layer followed by a Dense(256) + Dropout
+### 2. Custom CNN Architecture (Keras)
+- **Block 1**  
+  - Conv2D → Conv2D → MaxPool2D → Dropout  
+  - (filters: 32, kernel sizes: 5×5, activation: ReLU)
 
-Final Dense layer with Softmax activation over 43 classes
+- **Block 2**  
+  - Conv2D → Conv2D → MaxPool2D → Dropout  
+  - (filters: 64, kernel sizes: 3×3, activation: ReLU)
 
-Training Visualization (Matplotlib):
+- **Dense Layers**  
+  - Flatten → Dense(256, ReLU) → Dropout → Dense(43, Softmax)
 
-Saves plots of training/validation accuracy (Accuracy1.png) and loss (Loss1.png) to disk.
+### 3. Training Visualization (Matplotlib)
+- Saves plots of **training/validation accuracy** (`Accuracy1.png`) and **training/validation loss** (`Loss1.png`) to disk.
 
-Model Persistence:
+### 4. Model Persistence
+- After training, the model is saved to `my_model_new.h5`.  
+- During classification, the code loads `my_model.h5` by default (or `my_model_new.h5` if retrained).
 
-Saves the trained model to my_model_new.h5.
+---
 
-During classification, loads my_model.h5 (or my_model_new.h5 if retrained).
+## 📁 Folder Structure
 
+```plaintext
+road-sign-recognition/
+├── dataset/
+│   └── train/
+│       ├── 0/         # Class “Speed limit (20km/h)”
+│       ├── 1/         # Class “Speed limit (30km/h)”
+│       ├── …  
+│       └── 42/        # Class “End no passing veh > 3.5 tons”
+│       (Each subfolder contains PNG/JPG images of that class.)
+├── Accuracy1.png      # Plot of accuracy vs. epochs (after training)
+├── Loss1.png          # Plot of loss vs. epochs (after training)
+├── my_model.h5        # (Optional) Pre-trained Keras model for inference
+├── my_model_new.h5    # Trained model saved after clicking “Training”
+├── requirements.txt   # List of Python packages needed
+├── main.py            # Entry point that launches the PyQt5 GUI
+└── README.md
