@@ -53,19 +53,19 @@ Under the hood, we use **Keras** (with a TensorFlow backend) to build and train 
 
 ## 📁 Folder Structure
 
-```plaintext
 road-sign-recognition/
 ├── dataset/
-│   └── train/
-│       ├── 0/         # Class “Speed limit (20km/h)”
-│       ├── 1/         # Class “Speed limit (30km/h)”
-│       ├── …  
-│       └── 42/        # Class “End no passing veh > 3.5 tons”
-│       (Each subfolder contains PNG/JPG images of that class.)
-├── Accuracy1.png      # Plot of accuracy vs. epochs (after training)
-├── Loss1.png          # Plot of loss vs. epochs (after training)
-├── my_model.h5        # (Optional) Pre-trained Keras model for inference
-├── my_model_new.h5    # Trained model saved after clicking “Training”
-├── requirements.txt   # List of Python packages needed
-├── main.py            # Entry point that launches the PyQt5 GUI
-└── README.md
+│ └── train/
+│ ├── 0/ to 42/ # 43 folders with traffic sign images
+├── Accuracy1.png # Accuracy graph (after training)
+├── Loss1.png # Loss graph (after training)
+├── my_model.h5 # Optional pre-trained model
+├── my_model_new.h5 # Trained model after clicking "Training"
+├── requirements.txt # Python dependencies
+├── main.py # Launches the GUI
+└── README.md # This file
+
+yaml
+Copy
+Edit
+
