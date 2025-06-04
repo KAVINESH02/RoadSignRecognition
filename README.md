@@ -1,71 +1,140 @@
-# 🚦 Road Sign Recognition using CNN & PyQt5
+# 🚦 Road Sign Recognition using CNN and PyQt5
 
-This repository contains a **Python application** that performs traffic sign recognition using a **Convolutional Neural Network (CNN)**. The application provides a **PyQt5-based graphical user interface (GUI)** with three main functions:
-
-1. **🧠 Training**  
-   Trains a CNN from scratch on a labeled traffic-sign dataset.
-
-2. **🖼️ Browse Image**  
-   Allows the user to select an input image from their local file system to be classified.
-
-3. **🎯 Classify**  
-   Loads the trained model from disk, processes the selected image, and displays the predicted sign name in the GUI.
-
-Under the hood, we use **Keras** (with a TensorFlow backend) to build and train a CNN that takes RGB traffic-sign images (resized to 30×30 pixels) and outputs a probability distribution over **43 possible sign classes** (from the German Traffic Sign Recognition Benchmark [GTSRB] dataset).
+This repository contains a Python-based desktop application for recognizing traffic signs using a custom Convolutional Neural Network (CNN). It features an interactive GUI built with PyQt5 that enables training a model, browsing traffic sign images, and classifying them with real-time output.
 
 ---
 
-## ⚙️ Features
+## 📌 Project Features
 
-### 1. Interactive GUI (PyQt5)
-- **Browse Image**  
-  Select any `.png`, `.jpg`, `.jpeg`, or `.bmp` image from disk.
+- **Interactive GUI (PyQt5)**:
+  - 🖼️ **Browse Image**: Select .png/.jpg/.jpeg/.bmp files.
+  - 🧠 **Train Model**: Train a CNN from scratch.
+  - ✅ **Classify Image**: Use a pre-trained model to predict the sign.
+  - 📢 **Result Display**: Recognized class is shown in a text box.
 
-- **Training**  
-  Trigger model training on the prepared dataset and view progress in the console.
+- **Model Architecture (Keras)**:
+  - 2 blocks of Conv2D → Conv2D → MaxPool2D → Dropout
+  - Flatten → Dense(256) → Dropout → Dense(43) with softmax
 
-- **Classify**  
-  Load a pre-trained `.h5` model file and predict the class of a newly selected image.
+- **Training Visualization**:
+  - Saves plots of accuracy and loss (`Accuracy1.png`, `Loss1.png`).
 
-- **Result Display**  
-  The recognized class name appears in a read-only text box.
-
-### 2. Custom CNN Architecture (Keras)
-- **Block 1**  
-  - Conv2D → Conv2D → MaxPool2D → Dropout  
-  - (filters: 32, kernel sizes: 5×5, activation: ReLU)
-
-- **Block 2**  
-  - Conv2D → Conv2D → MaxPool2D → Dropout  
-  - (filters: 64, kernel sizes: 3×3, activation: ReLU)
-
-- **Dense Layers**  
-  - Flatten → Dense(256, ReLU) → Dropout → Dense(43, Softmax)
-
-### 3. Training Visualization (Matplotlib)
-- Saves plots of **training/validation accuracy** (`Accuracy1.png`) and **training/validation loss** (`Loss1.png`) to disk.
-
-### 4. Model Persistence
-- After training, the model is saved to `my_model_new.h5`.  
-- During classification, the code loads `my_model.h5` by default (or `my_model_new.h5` if retrained).
+- **Model Handling**:
+  - Trained model saved as `my_model_new.h5`
+  - Loaded model during classification: `my_model.h5`
 
 ---
 
 ## 📁 Folder Structure
-
+```
 road-sign-recognition/
-├── dataset/
-│ └── train/
-│ ├── 0/ to 42/ # 43 folders with traffic sign images
-├── Accuracy1.png # Accuracy graph (after training)
-├── Loss1.png # Loss graph (after training)
-├── my_model.h5 # Optional pre-trained model
-├── my_model_new.h5 # Trained model after clicking "Training"
-├── requirements.txt # Python dependencies
-├── main.py # Launches the GUI
-└── README.md # This file
+├── dataset/train/0/ to 42/
+├── Accuracy1.png
+├── Loss1.png
+├── my_model.h5
+├── my_model_new.h5
+├── requirements.txt
+├── main.py
+└── README.md
+```
 
-yaml
-Copy
-Edit
+---
 
+## ⚙️ Dependencies
+Install Python 3.7+ and run:
+```
+pip install -r requirements.txt
+```
+**requirements.txt**:
+- PyQt5
+- numpy
+- Pillow
+- matplotlib
+- scikit-learn
+- tensorflow
+- keras
+
+---
+
+## 📦 Installation Steps
+```bash
+git clone https://github.com/<your-username>/road-sign-recognition.git
+cd road-sign-recognition
+python3 -m venv venv
+source venv/bin/activate  # For Windows: venv\Scripts\activate
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+---
+
+## 📊 Training the Model
+```bash
+python main.py
+```
+- Click “Training” → Model trains on dataset (5 epochs).
+- Training & validation performance shown in console.
+- Model saved to `my_model_new.h5`.
+
+---
+
+## 🧪 Classifying Images
+```bash
+python main.py
+```
+- Click **Browse Image** to select a traffic sign.
+- Click **Classify** → Model predicts class name.
+- Displays result like `"Stop"` in GUI.
+
+---
+
+## 🧠 Model Summary
+- Input: (30, 30, 3)
+- Layers: Conv2D → Conv2D → MaxPool2D → Dropout (×2)
+- Dense(256) → Dropout → Dense(43, softmax)
+- Loss: categorical_crossentropy
+- Optimizer: Adam
+
+---
+
+## 🔖 Example Class Labels
+```
+0 - Speed limit (20km/h)
+1 - Speed limit (30km/h)
+...
+14 - Stop
+...
+42 - End no passing veh > 3.5 tons
+```
+
+---
+
+## 🚀 Future Improvements
+- 🔁 More epochs and data augmentation
+- 🔍 YOLO integration for detection + classification
+- 📷 Webcam real-time recognition
+- 🛠️ Executable bundling (PyInstaller)
+- 📂 Batch image processing
+
+---
+
+## 🤝 Contributing
+```bash
+git checkout -b feature/my-feature
+git commit -m "Added new feature"
+git push origin feature/my-feature
+```
+Then create a pull request!
+
+---
+
+## 📄 License
+This project is licensed under the MIT License.
+
+---
+
+## 🙏 Acknowledgements
+- GTSRB Dataset
+- TensorFlow & Keras
+- PyQt5
+- Scikit-learn & Matplotlib
